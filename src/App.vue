@@ -1,19 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <header></header>
+    <body>
+      <div id="app">
+        <img alt="Vue logo" src="./assets/logo.png" />
+
+        <bibliotecas-list v-if="page_selected == 'load'" />
+        <searcher v-if="page_selected == 'search'" />
+      </div>
+    </body>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BibliotecasList from "./components/BibliotecasList.vue";
+import Searcher from "./components/Searcher.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      page_selected: "search",
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    BibliotecasList,
+    Searcher,
+  },
+};
 </script>
 
 <style>

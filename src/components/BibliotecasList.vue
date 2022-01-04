@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Carda de almacén de datos</h1>
-    <h2>Seleccione fuente:</h2>
+    <h1>Carga de almacén de datos</h1>
+    <h3>Seleccione fuente:</h3>
     <div>
       <label>
         <input
@@ -23,7 +23,6 @@
           name="Comunitat Valenciana"
           value="cv"
           v-model="selected"
-          :disabled="this.loading ? disabled : ''"
         />
         Comunitat Valenciana </label
       ><br />
@@ -77,6 +76,15 @@ export default {
       loading: false,
       error: false,
     };
+  },
+  created: async function () {
+    try {
+      const res = await axios.get("http://localhost:8080/find/all");
+
+      this.bibliotecas = res.data;
+    } catch (e) {
+      console.log(e);
+    }
   },
   methods: {
     cargar: async function () {

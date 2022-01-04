@@ -8,7 +8,26 @@
     <input v-model="cod_postal" placeholder="Introduce Codigo Postal" />
     <br />
 
+    <select v-model="tipo">
+      <option value="">Seleccione un tipo</option>
+      <option>Biblioteca</option>
+      <option>Biblioteca Pública Municipal</option>
+      <option>Centro de Documentacion</option>
+      <option>Mediateca</option>
+      <option>Agencia de Lectura</option>
+      <option>Biblioteca Especializada</option>
+      <option>Biblioteca Infantil</option>
+    </select>
+    <br />
+
     <button :disabled="this.loading" v-on:click="buscar">Buscar</button>
+
+    <div>
+      <h3 v-if="this.bibliotecas != []">Resultados de la búsqueda:</h3>
+
+      <div v-else></div>
+    </div>
+
     <div v-if="this.loading == true">
       <pulse-loader :loading="this.loading"></pulse-loader>
     </div>
@@ -44,34 +63,43 @@ export default {
       localidad: "",
       provincia: "",
       cod_postal: "",
+      tipo: "",
       loading: false,
       bibliotecas: [],
     };
   },
-  created: async function () {
-    const res = await axios.get("http://localhost:8080/find/all");
+  // created: async function () {
+  //   const res = await axios.get("http://localhost:8080/find/all");
 
-    this.bibliotecas = res.data;
-  },
+  //   this.bibliotecas = res.data;
+  // },
   methods: {
     buscar: async function () {
       try {
+        const res = await axios.get("http://localhost:8080/find/all");
+        this.bibliotecas = res.data;
+
         this.loading = true;
-        var search = "http://localhost:8080/search";
         if (this.provincia != "") {
-          search += "?provincia=" + this.provincia + "&";
+          this.bibliotecas = this.bibliotecas.filter(
+            (d) => d.localidad.provincia.nombre === this.provincia
+          );
         }
         if (this.localidad != "") {
-          search += "?localidad=" + this.localidad + "&";
+          this.bibliotecas = this.bibliotecas.filter(
+            (d) => d.localidad.nombre === this.localidad
+          );
         }
         if (this.cod_postal != "") {
-          search += "?cod-postal=" + this.cod_postal + "&";
+          this.bibliotecas = this.bibliotecas.filter(
+            (d) => d.codigopostal === this.cod_postal
+          );
         }
-
-        console.log(search);
-        const res = await axios.get(search);
-
-        this.bibliotecas = res.data;
+        if (this.tipo != "") {
+          this.bibliotecas = this.bibliotecas.filter(
+            (d) => d.tipo === this.tipo
+          );
+        }
         this.loading = false;
       } catch (e) {
         console.log(e);

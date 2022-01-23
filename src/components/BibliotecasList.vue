@@ -53,7 +53,7 @@
       "
       v-if="this.bibliotecas != [] && !this.loading"
     >
-      <p v-for="biblioteca of bibliotecas" :key="biblioteca.nombre">
+      <p v-for="biblioteca of bibliotecas" :key="biblioteca.id">
         {{ biblioteca.nombre }}
       </p>
     </div>

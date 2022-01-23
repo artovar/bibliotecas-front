@@ -1,5 +1,6 @@
 <template>
   <div>
+    <leaflet-map :bibliotecas="bibliotecas"></leaflet-map>
     <h1>Buscador de Bibliotecas</h1>
     <input v-model="provincia" placeholder="Introduce Provincia" />
     <br />
@@ -52,13 +53,16 @@
 <script>
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import LeafletMap from "./LeafletMap.vue";
 
 export default {
   name: "buscador",
   components: {
     PulseLoader,
+    LeafletMap,
   },
   data() {
+    LeafletMap;
     return {
       localidad: "",
       provincia: "",

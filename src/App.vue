@@ -23,7 +23,6 @@
 <script>
 import BibliotecasList from "./components/BibliotecasList.vue";
 import Searcher from "./components/Searcher.vue";
-
 export default {
   name: "App",
   data() {

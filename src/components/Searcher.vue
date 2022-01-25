@@ -95,8 +95,9 @@ export default {
           );
         }
         if (this.cod_postal != "") {
+          console.log(this.cod_postal);
           this.bibliotecas = this.bibliotecas.filter(
-            (d) => d.codigopostal === this.cod_postal
+            (d) => d.codigopostal == this.cod_postal
           );
         }
         if (this.tipo != "") {
